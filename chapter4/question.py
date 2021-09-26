@@ -25,6 +25,11 @@ def determine_question_type(chunk):
 def generate_question(doc,question_type):
     sent = ''
     for i, token in enumerate(doc):
+        if token.tag_ == 'PRP' and doc[i+1].tag_ == 'MD' and doc[i+2].tag_ == 'VB':
+            sent = ' ' + doc[i+1].text + ' '
+            sent = sent + doc[i].text
+            sent = sent + ' ' + doc[i+1:].text
+            break
         if token.tag_ == 'PRP' and doc[i+1].tag_ == 'VBP':
             sent = ' do ' + doc[i].text
             sent = sent + ' ' + doc[i+1:].text
